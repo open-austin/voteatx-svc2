@@ -1,0 +1,7 @@
+columnMap:
+  address: "{address_line1}\n{city}, {state} {zip5}"
+  location:
+    latitude: "{Latitude}"
+    longitude: "{Longitude}"
+  county_name: "{county_name}"
+  location_name: "{LocationName}"
