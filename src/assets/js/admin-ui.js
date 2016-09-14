@@ -1,44 +1,38 @@
 webix.ui({
-  rows:[
+  view:"tabview",
+  header: "VoteATX Admin",
+  id:'tabbar',
+  cells:[
     {
-      view:"template",
-      type:"header",
-      template:"My App!"
-    },
-    {
-      view:"tabbar",
-      id:'tabbar',
-      value:'formView',
-      multiview:true,
-      options: [
-        { value: 'Locations', id: 'formView'},
-        { value: 'Schedules', id: 'emptyView'}
+      id:"locationView",
+      header: "Locations",
+      view: "datatable",
+      //autoConfig:true,
+      editable:true,
+      editaction:"dblclick",
+      url: '/voting_location'
+      //*
+      ,
+      columns: [
+        {id:"location_name", header:"Name", width:250, editor:"text"},
+        {id:"address", header:"Address", width: 400, editor:"text"},
+        //{id:"county_name", header:"County", width: 100, editor:"combo"},
+        {id:"schedules", header:"Schedules"}
       ]
+      //*/
     },
     {
-      cells:[
-        {
-          id:"formView",
-          view: "datatable",
-          template:"Form Content",
-          //autoConfig:true,
-          editable:true,
-          editaction:"dblclick",
-          url: '/voting_location'
-          //*
-          ,
-          columns: [
-            {id:"location_name", header:"Name", width:250, editor:"text"},
-            {id:"address", header:"Address", width: 400, editor:"text"},
-            {id:"county_name", header:"County", width: 100, editor:"combo"},
-            {id:"schedules", header:"Schedules"}
-          ]
-          //*/
-        },
-        {
-          id:"emptyView",
-          template:"Some content"
-        }
-      ]}
-    ]
+      id:"scheduleView",
+      header: "Schedules",
+      view: "datatable",
+      editable:true,
+      editaction:"dblclick",
+      url: '/voting_location',
+      columns: [
+        {id:"location_name", header:"Name", width:250, editor:"text"},
+        {id:"address", header:"Address", width: 400, editor:"text"},
+        {id:"county_name", header:"County", width: 100, editor:"combo"}
+      ]
+    }
+  ]
 });
