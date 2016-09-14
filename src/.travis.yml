@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "6.5.0"
+branches:
+  only:
+  # - master
+  - travis-dev
+install:
+  - npm install -g sails
+  - npm install
+script:
+  - echo "normally you'd run 'npm test' or something"
