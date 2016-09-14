@@ -6,6 +6,6 @@ branches:
   - master
 install:
   - npm install -g sails
-  - npm install
+  - cd src && npm install
 script:
   - echo "normally you'd run 'npm test' or something"
