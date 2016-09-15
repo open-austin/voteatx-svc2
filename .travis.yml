@@ -12,9 +12,5 @@ install:
 - cd src && npm install
 script:
 - echo "normally you'd run 'npm test' or something"
-deploy:
-  provider: script
-  script: deploy.sh
-  skip_cleanup: true
-  on:
-    branch: master
+after_success:
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && grunt deploy -v
