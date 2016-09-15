@@ -13,4 +13,4 @@ install:
 script:
 - echo "normally you'd run 'npm test' or something"
 after_success:
-- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && grunt deploy -v
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && grunt deploy
