@@ -6,6 +6,8 @@ before_install:
   -in voteatx.pem.enc -out voteatx.pem -d
 install:
 - npm install -g sails
+- npm install -g grunt
+- npm install -g grunt-cli
 - npm install
 - cd src && npm install
 script:
