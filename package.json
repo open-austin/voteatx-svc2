@@ -1,0 +1,13 @@
+{
+  "name": "voteatx-svc2",
+  "private": true,
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:open-austin/voteatx-svc2.git"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-ssh": "^0.12.9"
+  }
+}

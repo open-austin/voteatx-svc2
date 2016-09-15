@@ -10,6 +10,12 @@ before_install:
   -in voteatx.pem.enc -out voteatx.pem -d
 install:
 - npm install -g sails
+- npm install
 - cd src && npm install
 script:
 - echo "normally you'd run 'npm test' or something"
+deploy:
+  provider: script
+  script: grunt deploy -v
+  on:
+    branch: master
