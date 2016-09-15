@@ -10,13 +10,20 @@
  *
  */
 
-module.exports = {
+module.exports.connections = {
 
   /***************************************************************************
    * Set the default database connection for models in the production        *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
-
+  voteAtxMongo: {
+    adapter: 'sails-mongo',
+    host: 'localhost',
+    port: 27017,
+    //user: 'username', //optional
+    //password: 'password', //optional
+    database: 'voteatx' //optional
+  }
   // models: {
   //   connection: 'someMysqlServer'
   // },
