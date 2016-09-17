@@ -32,8 +32,7 @@ webix.ui({
           {id:"schedules", header:"Schedules"}
         ]
       }
-    },
-    {
+    }, {
       header: "Schedules",
       body: {
         id:"scheduleView",
@@ -66,11 +65,44 @@ webix.ui({
           }
         }
       }
+    }, {
+      header: "Location Schedules",
+      body: {
+        id: "locationScheduleView",
+        type: "space",
+        rows: [
+          {
+            cols: [
+              {
+                view: "list",
+                template: "#name#",
+                select: true,
+                url: "/schedule",
+                on: {
+                  onSelectChange: function(ids) {
+                    console.log("onSelectChange", ids);
+                  }
+                }
+              }, {
+                header: "In Schedule",
+                body: {
+                  view: "list"
+                }
+              }, {
+                header: "Not In Schedule",
+                body: {
+                  view: "list"
+                }
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 });
 
-$$("tabs").setValue("scheduleView");
+$$("tabs").setValue("locationScheduleView");
 /*
 $$("scheduleView").add({
   name: "name",
