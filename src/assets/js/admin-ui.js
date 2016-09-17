@@ -4,6 +4,11 @@ webix.editors.$popup.datetime = webix.extend({
 webix.editors.datetime = webix.extend({
   popupType: "datetime"
 }, webix.editors.date);
+webix.proxy("rest", "/schedule");
+
+function parseDate(input) {
+  return new Date(input);
+}
 
 webix.ui({
   //*
@@ -36,19 +41,52 @@ webix.ui({
         editable:true,
         editaction:"dblclick",
         url: '/schedule',
+        save: 'rest->/schedule',
+        scheme: {
+          $init: function(obj) {
+            obj.start = new Date(obj.start);
+            obj.stop = new Date(obj.stop);
+          }
+        },
         columns: [
           {id:"name", header:"Name", width:250, editor:"text"},
           {id:"start", header:"Start", width: 400, editor:"datetime"},
-          {id:"stop", header:"Stop", width: 400, editor: "datetime"},
-        ]
+          {id:"stop", header:"Stop", width: 400, editor: "datetime"}
+        ],
+        on: {
+          onAfterEditStop: function(state, editor, ignoreUpdate) {
+            console.log("new state: ", state);
+            console.log(editor);
+          },
+          onLiveEdit: function(state, editor) {
+            console.log("onLiveEdit", state, editor);
+          },
+          onEditorChange: function(id, value) {
+            console.log("onEditorChange", id, value);
+          }
+        }
       }
     }
   ]
 });
 
 $$("tabs").setValue("scheduleView");
+/*
 $$("scheduleView").add({
   name: "name",
   start: new Date(),
   stop: new Date()
 })
+*/
+
+/*
+webix.ajax().post("/schedule", {
+  name: "name",
+  start: new Date(),
+  stop: new Date()
+}).then(function(res) {
+  // refresh datatable
+  console.log("done");
+  $$("scheduleView").load(res.json())
+});
+*/
