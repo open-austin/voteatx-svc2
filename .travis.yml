@@ -1,11 +1,16 @@
 language: node_js
 node_js:
-  - "6.5.0"
-branches:
-  only:
-  - master
+- 6.5.0
+before_install:
+- openssl aes-256-cbc -K $encrypted_81984b3c73af_key -iv $encrypted_81984b3c73af_iv
+  -in voteatx.pem.enc -out voteatx.pem -d
 install:
-  - npm install -g sails
-  - cd src && npm install
+- npm install -g sails
+- npm install -g grunt
+- npm install -g grunt-cli
+- npm install
+- cd src && npm install && cd ../
 script:
-  - echo "normally you'd run 'npm test' or something"
+- echo "normally you'd run 'npm test' or something"
+after_success:
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && grunt deploy

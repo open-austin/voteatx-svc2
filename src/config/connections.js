@@ -63,7 +63,7 @@ module.exports.connections = {
    //user: 'username', //optional
    //password: 'password', //optional
    database: 'voteatx' //optional
-  },
+  }
 
   /***************************************************************************
   *                                                                          *
