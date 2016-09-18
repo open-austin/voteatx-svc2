@@ -59,11 +59,54 @@ module.exports = {
 			},
       limit: 3
 		};
-    console.log("finding for ", searchCriteria);
 
     Voting_location.find(searchCriteria).exec((err, locs) => {
       if(err) cb(err);
       else cb(null, locs);
     });
+  },
+
+  findLocationsWithSchedule: function(scheduleId, cb) {
+    Voting_location
+      .native(function(err, col) {
+        col.find({
+          $and: [
+            {
+              schedules:{
+                $exists:true
+              }
+            },
+            {
+              schedules:scheduleId
+            }
+          ]
+        }).toArray(function (err, results) {
+          if (err) return cb(err);
+          else cb(null, results);
+        });
+      })
+  },
+
+  findLocationsNotWithSchedule: function(scheduleId, cb) {
+    Voting_location
+      .native(function(err, col) {
+        col.find({
+          $or:[
+            {
+              schedules:{
+                $exists:false
+              }
+            },
+            {
+              schedules:{
+                $nin:[scheduleId]
+              }
+            }
+          ]
+        }).toArray(function (err, results) {
+          if (err) return cb(err);
+          else cb(null, results);
+        });
+      });
   }
 };

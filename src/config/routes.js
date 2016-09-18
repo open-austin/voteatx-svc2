@@ -48,6 +48,7 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-  'get /search': 'Voting_locationController.search'
+  'get /search': 'Voting_locationController.search',
+  'get /schedule/:id/locations': 'ScheduleController.locationsList'
 
 };

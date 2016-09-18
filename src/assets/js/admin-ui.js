@@ -11,7 +11,6 @@ function parseDate(input) {
 }
 
 webix.ui({
-  //*
   view:"tabview",
   header: "VoteATX Admin",
   id:"tabs",
@@ -28,8 +27,7 @@ webix.ui({
         columns: [
           {id:"location_name", header:"Name", width:250, editor:"text"},
           {id:"address", header:"Address", width: 400, editor:"text"},
-          {id:"county_name", header:"County", width: 100, editor:"combo"},
-          {id:"schedules", header:"Schedules"}
+          {id:"county_name", header:"County", width: 100, editor:"combo"}
         ]
       }
     }, {
@@ -66,7 +64,7 @@ webix.ui({
         }
       }
     }, {
-      header: "Location Schedules",
+      header: "Location Schedules2",
       body: {
         id: "locationScheduleView",
         type: "space",
@@ -80,18 +78,25 @@ webix.ui({
                 url: "/schedule",
                 on: {
                   onSelectChange: function(ids) {
-                    console.log("onSelectChange", ids);
+                    loadScheduledLocations(ids[0]);
                   }
                 }
               }, {
                 header: "In Schedule",
                 body: {
-                  view: "list"
+                  view: "list",
+                  id: "withScheduleList"
                 }
               }, {
                 header: "Not In Schedule",
                 body: {
-                  view: "list"
+                  view: "list",
+                  template: "#location_name#",
+                  id: "withoutScheduleList",
+                  data: [
+                    {location_name:"one"},
+                    {location_name:"two"}
+                  ]
                 }
               }
             ]
@@ -103,22 +108,30 @@ webix.ui({
 });
 
 $$("tabs").setValue("locationScheduleView");
-/*
-$$("scheduleView").add({
-  name: "name",
-  start: new Date(),
-  stop: new Date()
-})
-*/
 
-/*
-webix.ajax().post("/schedule", {
-  name: "name",
-  start: new Date(),
-  stop: new Date()
-}).then(function(res) {
-  // refresh datatable
-  console.log("done");
-  $$("scheduleView").load(res.json())
-});
-*/
+function loadScheduledLocations(scheduleId) {
+  var url = "/schedule/"+scheduleId+"/locations";
+  webix.ajax()
+    .get(url)
+    .then(function(res) {
+      $$("withScheduleList").parse(res.json().withSchedule);
+      console.log($$("withoutScheduleList"));
+      console.log("without", res.json().withoutSchedule);
+      var withoutList = $$("withoutScheduleList");
+      withoutList.clearAll();
+      console.log("cleared");
+      var res = withoutList.parse(res.json().withoutSchedule);
+      console.log("parsed", res);
+    })
+}
+
+function reset(str) {
+  $$("withoutScheduleList").clearAll();
+  $$("withoutScheduleList").parse([
+    {location_name:"one"},
+    {location_name:"three"},
+    //{location_name:str},
+    {location_name:"two"}
+  ]
+);
+}
