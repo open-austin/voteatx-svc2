@@ -29,7 +29,7 @@ webix.ui({
           {id:"address", header:"Address", width: 400, editor:"text"},
           {id:"county_name", header:"County", width: 100, editor:"combo"}
         ]
-      }
+      }//*/
     }, {
       header: "Schedules",
       body: {
@@ -62,7 +62,7 @@ webix.ui({
             console.log("onEditorChange", id, value);
           }
         }
-      }
+      }//*/
     }, {
       header: "Location Schedules2",
       body: {
@@ -102,7 +102,7 @@ webix.ui({
             ]
           }
         ]
-      }
+      }//*/
     }
   ]
 });
@@ -130,7 +130,7 @@ function reset(str) {
   $$("withoutScheduleList").parse([
     {location_name:"one"},
     {location_name:"three"},
-    //{location_name:str},
+    {location_name:str},
     {location_name:"two"}
   ]
 );
