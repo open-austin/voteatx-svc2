@@ -96,7 +96,6 @@ module.exports = {
         withoutSchedule = [];
         nextLoc: for (loc of locs) {
           for(sched of loc.schedules) {
-            console.log("Found schedule", scheduleId, sched, loc);
             if(sched.id === scheduleId) {
               withSchedule.push(loc);
               continue nextLoc;

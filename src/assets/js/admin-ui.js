@@ -20,7 +20,6 @@ webix.ui({
       body: {
         id:"locationView",
         view: "datatable",
-        //autoConfig:true,
         editable:true,
         editaction:"dblclick",
         url: '/voting_location',
@@ -29,7 +28,7 @@ webix.ui({
           {id:"address", header:"Address", width: 400, editor:"text"},
           {id:"county_name", header:"County", width: 100, editor:"combo"}
         ]
-      }//*/
+      }
     }, {
       header: "Schedules",
       body: {
@@ -62,9 +61,9 @@ webix.ui({
             console.log("onEditorChange", id, value);
           }
         }
-      }//*/
+      }
     }, {
-      header: "Location Schedules2",
+      header: "Location Schedules",
       body: {
         id: "locationScheduleView",
         type: "space",
@@ -76,6 +75,7 @@ webix.ui({
                 template: "#name#",
                 select: true,
                 url: "/schedule",
+                id: "scheduleList",
                 on: {
                   onSelectChange: function(ids) {
                     loadScheduledLocations(ids[0]);
@@ -86,20 +86,40 @@ webix.ui({
                 body: {
                   view: "list",
                   id: "withScheduleList",
-                  template: "#location_name#"
+                  template: "#location_name#",
+                  on: {
+                    onItemDblClick: function(locId) {
+                      var schedId = $$("scheduleList").getSelectedItem().id;
+                      webix.ajax()
+                        .del("/voting_location/"+locId+"/schedules/"+schedId)
+                        .then(function(res) {
+                          loadScheduledLocations(schedId);
+                        });
+                    }
+                  }
                 }
               }, {
                 header: "Not In Schedule",
                 body: {
                   view: "list",
                   template: "#location_name#",
-                  id: "withoutScheduleList"
+                  id: "withoutScheduleList",
+                  on: {
+                    onItemDblClick: function(locId, e) {
+                      var schedId = $$("scheduleList").getSelectedItem().id;
+                      webix.ajax()
+                        .post("/voting_location/"+locId+"/schedules/"+schedId)
+                        .then(function(res) {
+                          loadScheduledLocations(schedId);
+                        });
+                    }
+                  }
                 }
               }
             ]
           }
         ]
-      }//*/
+      }
     }
   ]
 });
