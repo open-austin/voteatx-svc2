@@ -49,6 +49,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   'get /search': 'Voting_locationController.search',
-  'get /schedule/:scheduleId/locations': 'ScheduleController.locationsList'
+  'get /schedule/:scheduleId/locations': 'ScheduleController.locationsList',
+  'get /voting_location/:locationId/reportLongLine': 'LineReportController.reportLongLine'
 
 };
