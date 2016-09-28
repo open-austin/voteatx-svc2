@@ -15,11 +15,6 @@ module.exports = {
       unique: true,
       required: true
     },
-    /*
-    location: {
-      model: 'geolocation'
-    },
-    */
     location: {
       type: 'json',
       isLocation: true
@@ -67,26 +62,6 @@ module.exports = {
   },
 
   findLocationsBySchedule: function(scheduleId, cb) {
-    /*
-    Voting_location
-      .native(function(err, col) {
-        col.find({
-          $and: [
-            {
-              schedules:{
-                $exists:true
-              }
-            },
-            {
-              schedules:scheduleId
-            }
-          ]
-        }).toArray(function (err, results) {
-          if (err) return cb(err);
-          else cb(null, results);
-        });
-      })
-      //*/
     Voting_location
       .find()
       .populate("schedules")
@@ -105,6 +80,6 @@ module.exports = {
           withoutSchedule.push(loc);
         }
         cb(null, {withSchedule: withSchedule, withoutSchedule: withoutSchedule});
-      })
+      });
   }
 };
