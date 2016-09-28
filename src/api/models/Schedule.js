@@ -1,6 +1,4 @@
-
 module.exports = {
-
   attributes: {
     start: {
       type: 'datetime',

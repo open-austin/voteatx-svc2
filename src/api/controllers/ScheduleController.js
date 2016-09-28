@@ -1,4 +1,3 @@
-
 module.exports = {
   locationsList: function(req, res) {
     console.log("getting list", req.params);
