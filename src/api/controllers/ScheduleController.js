@@ -1,15 +1,10 @@
 
 module.exports = {
   locationsList: function(req, res) {
-    Voting_location.findLocationsWithSchedule(req.scheduleId, function(err, locsWith) {
+    console.log("getting list", req.params);
+    Voting_location.findLocationsBySchedule(req.params.scheduleId, function(err, locs) {
       if(err) res.error(err);
-      else Voting_location.findLocationsNotWithSchedule(req.scheduleId, function(err, locsWithout) {
-        if(err) res.error(err);
-        else res.jsonp({
-          withSchedule: locsWith,
-          withoutSchedule: locsWithout
-        });
-      });
+      else res.jsonp(locs);
     })
   }
 };

@@ -85,18 +85,15 @@ webix.ui({
                 header: "In Schedule",
                 body: {
                   view: "list",
-                  id: "withScheduleList"
+                  id: "withScheduleList",
+                  template: "#location_name#"
                 }
               }, {
                 header: "Not In Schedule",
                 body: {
                   view: "list",
                   template: "#location_name#",
-                  id: "withoutScheduleList",
-                  data: [
-                    {location_name:"one"},
-                    {location_name:"two"}
-                  ]
+                  id: "withoutScheduleList"
                 }
               }
             ]
@@ -114,7 +111,9 @@ function loadScheduledLocations(scheduleId) {
   webix.ajax()
     .get(url)
     .then(function(res) {
-      $$("withScheduleList").parse(res.json().withSchedule);
+      var withList = $$("withScheduleList");
+      withList.clearAll();
+      withList.parse(res.json().withSchedule);
       console.log($$("withoutScheduleList"));
       console.log("without", res.json().withoutSchedule);
       var withoutList = $$("withoutScheduleList");

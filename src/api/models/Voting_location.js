@@ -66,7 +66,8 @@ module.exports = {
     });
   },
 
-  findLocationsWithSchedule: function(scheduleId, cb) {
+  findLocationsBySchedule: function(scheduleId, cb) {
+    /*
     Voting_location
       .native(function(err, col) {
         col.find({
@@ -85,28 +86,26 @@ module.exports = {
           else cb(null, results);
         });
       })
-  },
-
-  findLocationsNotWithSchedule: function(scheduleId, cb) {
+      //*/
     Voting_location
-      .native(function(err, col) {
-        col.find({
-          $or:[
-            {
-              schedules:{
-                $exists:false
-              }
-            },
-            {
-              schedules:{
-                $nin:[scheduleId]
-              }
+      .find()
+      .populate("schedules")
+      .exec(function(err, locs) {
+        if(err) cb(err);
+        withSchedule = [];
+        withoutSchedule = [];
+        nextLoc: for (loc of locs) {
+          for(sched of loc.schedules) {
+            console.log("Found schedule", scheduleId, sched, loc);
+            if(sched.id === scheduleId) {
+              withSchedule.push(loc);
+              continue nextLoc;
             }
-          ]
-        }).toArray(function (err, results) {
-          if (err) return cb(err);
-          else cb(null, results);
-        });
-      });
+          }
+          // the continue will skip this if the schedule is found
+          withoutSchedule.push(loc);
+        }
+        cb(null, {withSchedule: withSchedule, withoutSchedule: withoutSchedule});
+      })
   }
 };
