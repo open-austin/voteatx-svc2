@@ -23,6 +23,13 @@ module.exports = {
 				res.error(err);
 			}
 		});
+	},
+	reportLongLine: function(req, res) {
+		console.log("Long line report data: ", req.params);
+		LineReport.reportLongLine(req.ip, req.params.locationId, function(err, report) {
+			if(err) res.json(err);
+			else res.jsonp(report);
+		})
 	}
 };
 
